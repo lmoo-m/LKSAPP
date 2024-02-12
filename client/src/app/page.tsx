@@ -1,40 +1,34 @@
 "use client";
 
-import { getUsers } from "@/libs/axiosService/userService";
-import Image from "next/image";
-import Link from "next/link";
-import defaultPhotoProfile from "@/assets/profile.png";
+import { getFile } from "@/libs/axiosService/fileService";
+
 import { useEffect, useState } from "react";
 
-export default function Home() {
-    const [users, setUsers] = useState([]);
+import CardPost from "@/components/cardPost";
 
-    const p = async () => {
-        const { data } = await getUsers();
-        setUsers(data.data);
-    };
+export default function Home() {
+    const [files, setFiles] = useState([]);
+
     useEffect(() => {
-        p();
+        getFile().then((res) => {
+            const { data } = res;
+            setFiles(data.data);
+        });
+        return () => {};
     }, []);
 
     return (
-        <div className="flex min-h-screen flex-col items-center ">
-            {users &&
-                users.map((data: any, i: number) => {
+        <div className="flex flex-col items-center mt-5">
+            {files &&
+                files.map((data: any, i: number) => {
                     return (
-                        <div key={i}>
-                            {data.username}
-                            <Image
-                                src={
-                                    data.profile
-                                        ? `${process.env.NEXT_PUBLIC_API_URL}uploads/profile/${data.profile}`
-                                        : defaultPhotoProfile
-                                }
-                                alt={data.username}
-                                width={400}
-                                height={400}
-                            />
-                        </div>
+                        <CardPost
+                            key={i}
+                            date={data.date}
+                            filename={data.filename}
+                            title={data?.title}
+                            user={data.user}
+                        />
                     );
                 })}
         </div>

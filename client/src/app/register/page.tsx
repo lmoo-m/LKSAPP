@@ -7,7 +7,7 @@ import { register, uploadProfile } from "@/libs/axiosService/userService";
 import Swal, { SweetAlertResult } from "sweetalert2";
 import { useRouter } from "next/navigation";
 
-function page() {
+function Page() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [konfirmasiPassword, setKonfirmasiPassword] = useState("");
@@ -87,8 +87,8 @@ function page() {
     };
 
     return (
-        <div className="flex flex-col items-center">
-            <div className="bg-light w-1/2 rounded-md p-4 text-primary flex flex-col gap-3 shadow-md shadow-accent/75">
+        <div className="flex flex-col items-center justify-center min-h-screen">
+            <div className="bg-secondary w-1/2 rounded-md p-4 text-white flex flex-col gap-3 shadow-md shadow-accent/75">
                 <h1 className="text-2xl capitalize font-bold">
                     Buat Akun Baru
                 </h1>
@@ -113,14 +113,14 @@ function page() {
                 />
                 <button
                     onClick={() => handleButton()}
-                    className="w-full outline-none mt-1 py-2 px-1 bg-secondary text-light rounded-sm placeholder:text-light/75 font-semibold border border-secondary/0 hover:border-secondary hover:bg-secondary/0 hover:text-secondary transition"
+                    className="w-full outline-none mt-1 py-2 px-1 bg-secondary border border-white  rounded-sm placeholder:text-light/75 font-semibold  hover:border-primary hover:bg-primary hover:text-white transition"
                 >
                     Register
                 </button>
                 <section>
                     <p>
                         Sudah punya Akun?{" "}
-                        <Link href={"/login"} className="text-secondary">
+                        <Link href={"/login"} className="text-primary">
                             login disini
                         </Link>
                     </p>
@@ -130,4 +130,4 @@ function page() {
     );
 }
 
-export default page;
+export default Page;

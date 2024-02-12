@@ -2,9 +2,10 @@ import jwt from "jsonwebtoken";
 import user from "../models/user.js";
 import bcrypt from "bcrypt";
 import env from "../helper/enviroment.js";
+import file from "../models/file.js";
 
 export const getUser = async (req, res) => {
-    const users = await user.findAll();
+    const users = await user.findAll({ include: [file] });
 
     if (users.length === 0) {
         return res.send({
@@ -17,6 +18,25 @@ export const getUser = async (req, res) => {
         status: true,
         msg: "get data users",
         data: users,
+    });
+};
+
+export const getUserById = async (req, res) => {
+    const { id } = req.params;
+
+    const userSelect = await user.findOne({ where: { id }, include: [file] });
+
+    if (!userSelect) {
+        return res.send({
+            status: false,
+            msg: "user tidak ditemukan",
+        });
+    }
+
+    return res.send({
+        status: true,
+        msg: "get data users",
+        data: userSelect,
     });
 };
 
@@ -78,6 +98,7 @@ export const login = async (req, res) => {
         }
 
         const payload = {
+            id: findUser.id,
             username: findUser.username,
             profile: findUser.profile,
         };

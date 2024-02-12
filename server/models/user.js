@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import database from "../config/database.js";
+import file from "./file.js";
 
 const user = database.define(
     "users",
@@ -12,5 +13,8 @@ const user = database.define(
         freezeTableName: true,
     }
 );
+
+user.hasMany(file, { foreignKey: "user_id" });
+file.belongsTo(user, { foreignKey: "user_id" });
 
 export default user;

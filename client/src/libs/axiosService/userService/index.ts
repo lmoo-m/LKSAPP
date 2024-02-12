@@ -19,6 +19,11 @@ export const register = async ({
     return response;
 };
 
+export const getUser = async (id: number) => {
+    const response = await serviceAxios.get(`/users/${id}`);
+    return response;
+};
+
 export const uploadProfile = async ({ id, photo }: uploadPhotoType) => {
     const form = new FormData();
     form.append("profile", photo);
@@ -32,5 +37,10 @@ export const login = async ({ username, password }: loginType) => {
         username,
         password,
     });
+    return response;
+};
+
+export const logout = async () => {
+    const response = await serviceAxios.post("/logout");
     return response;
 };
