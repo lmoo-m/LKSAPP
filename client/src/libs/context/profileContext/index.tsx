@@ -23,12 +23,8 @@ type profileType = {
 };
 
 export const Profile = createContext<any>({
-    user: {
-        files: [],
-        username: "",
-        profile: "",
-    },
-    setUser: (): boolean => false,
+    u: "kdj",
+    setU: (): string => "kdj",
 });
 
 export default function ProfileContext({
@@ -36,13 +32,7 @@ export default function ProfileContext({
 }: {
     children: React.ReactNode;
 }) {
-    const [user, setUser] = useState<any>({
-        files: [],
-        username: "",
-        profile: "",
-    });
-
-    // console.log(user);
+    const [user, setUser] = useState<any>("pertama");
 
     return (
         <Profile.Provider value={{ user, setUser }}>

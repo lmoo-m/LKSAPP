@@ -8,7 +8,7 @@ const size = 25;
 type itemType = {
     title: string;
     icon: ReactNode;
-    url: string;
+    url: string | string[];
 };
 
 const listItem: itemType[] = [

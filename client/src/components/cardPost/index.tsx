@@ -6,7 +6,7 @@ import {
     FaThumbsDown,
 } from "react-icons/fa6";
 import Image from "next/image";
-import defaultPhotoProfile from "@/assets/profile.png";
+import PhotoProfile from "../photoProfile";
 
 type userType = {
     profile: string;
@@ -24,16 +24,10 @@ export default function CardPost(data: dataProps) {
     return (
         <article className="border-t-2 border-accent bg-dark flex py-2 px-4 gap-2 w-full m-h-fit">
             <section>
-                <Image
-                    src={
-                        data.filename
-                            ? `${process.env.NEXT_PUBLIC_API_URL}uploads/profile/${data.user.profile}`
-                            : defaultPhotoProfile
-                    }
-                    alt={data.title}
-                    width={60}
-                    height={20}
-                    className="rounded-full"
+                <PhotoProfile
+                    filename={data.filename}
+                    user={data.user}
+                    title={data.title}
                 />
             </section>
 
@@ -47,19 +41,17 @@ export default function CardPost(data: dataProps) {
                     </p>
                 </section>
                 <p className="font-normal">{data.title}</p>
-                <Image
-                    src={
-                        data.filename
-                            ? `${process.env.NEXT_PUBLIC_API_URL}uploads/file/${data.filename}`
-                            : defaultPhotoProfile
-                    }
-                    alt={data.title}
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{ width: "100%" }}
-                    className="rounded-xl aspect-video mt-1"
-                />
+                {data.filename ? (
+                    <Image
+                        src={`${process.env.NEXT_PUBLIC_API_URL}uploads/file/${data.filename}`}
+                        alt={data.title}
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        style={{ width: "100%" }}
+                        className="rounded-xl aspect-video mt-1"
+                    />
+                ) : null}
                 <section className="flex gap-5 mt-1">
                     <section className="flex items-center gap-2 text-lg ">
                         <span className="hover:bg-white/10 hover:text-primary cursor-pointer transition rounded-full p-1">

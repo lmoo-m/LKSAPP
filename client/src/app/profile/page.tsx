@@ -1,25 +1,31 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import cover from "@/assets/cover.svg";
-import Image from "next/image";
-import ContentProfile from "@/components/contentProfile";
+import React, { useEffect } from "react";
+import { getUser } from "@/libs/axiosService/userService";
 import { profileContextGlobal } from "@/libs/context/profileContext";
+import { getToken } from "@/libs/decodeToken";
+import PostContent from "@/components/contentProfile/postContent";
+import { navItem } from "@/components/contentProfile/navProfile/navItem";
+import { useSearchParams } from "next/navigation";
 
 const Profile = () => {
-    const { user }: any = profileContextGlobal();
+    const decode: any = getToken();
+    const { setUser }: any = profileContextGlobal();
+    const params = useSearchParams();
 
-    // console.log(user);
+    const selectItem = navItem.find(
+        (e) => e.name.toLocaleLowerCase() === params.get("page")
+    );
+
+    useEffect(() => {
+        getUser(decode.id).then((res: any) => {
+            const { data } = res.data;
+            setUser(data);
+        });
+    }, []);
 
     return (
-        <>
-            {/*  */}
-            <ContentProfile
-                files={user.files}
-                profile={user.profile}
-                username={user.username}
-            />
-        </>
+        <>{selectItem?.component ? selectItem.component : <PostContent />}</>
     );
 };
 

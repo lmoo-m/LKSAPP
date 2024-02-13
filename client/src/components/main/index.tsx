@@ -6,7 +6,9 @@ import listItem from "../ListLink/linkItem";
 
 export default function Main({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
-    const item: any = listItem.filter((e) => e.url === pathname)[0];
+    const item: any = listItem.filter((e) => {
+        return e.url === pathname;
+    })[0];
 
     return (
         <section className="min-h-screen tracking-wide col-span-4 border-x-2 border-accent bg-secondary ">
