@@ -7,25 +7,32 @@ type userType = {
 };
 
 interface props {
-    filename: string;
     user: userType;
-    title: string;
     width?: number;
     heigth?: number;
 }
 
 export default function PhotoProfile(data: props) {
     return (
-        <Image
-            src={
-                data.filename
-                    ? `${process.env.NEXT_PUBLIC_API_URL}uploads/profile/${data.user.profile}`
-                    : defaultPhotoProfile
-            }
-            alt={data.title || "profile"}
-            width={data.width || 60}
-            height={data.heigth || 20}
-            className="rounded-full"
-        />
+        <span
+            className="relative block rounded-full border-2 "
+            style={{
+                width: data.width || "4rem",
+                height: data.heigth || "4rem",
+            }}
+        >
+            <Image
+                src={
+                    data.user.profile
+                        ? `${process.env.NEXT_PUBLIC_API_URL}uploads/profile/${data.user.profile}`
+                        : defaultPhotoProfile
+                }
+                layout="fill"
+                alt={"profile"}
+                // width={data.width || 60}
+                // height={data.heigth || 20}
+                className="rounded-full"
+            />
+        </span>
     );
 }

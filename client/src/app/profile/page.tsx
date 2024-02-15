@@ -10,7 +10,7 @@ import { useSearchParams } from "next/navigation";
 
 const Profile = () => {
     const decode: any = getToken();
-    const { setUser }: any = profileContextGlobal();
+    const { setUser, update }: any = profileContextGlobal();
     const params = useSearchParams();
 
     const selectItem = navItem.find(
@@ -22,7 +22,7 @@ const Profile = () => {
             const { data } = res.data;
             setUser(data);
         });
-    }, []);
+    }, [update]);
 
     return (
         <>{selectItem?.component ? selectItem.component : <PostContent />}</>

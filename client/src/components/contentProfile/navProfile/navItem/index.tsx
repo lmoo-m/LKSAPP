@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 import PostContent from "../../postContent";
+import LikeContent from "../../likeContent";
+import PrivateContent from "../../privateContent";
 
 type itemType = {
     name: string;
@@ -16,21 +18,21 @@ export const navItem: itemType[] = [
         component: <PostContent />,
     },
     {
-        name: "Media",
+        name: "Arsip",
         active: false,
-        url: "/profile?page=media",
-        component: <>sdakjd</>,
+        url: "/profile?page=arsip",
+        component: <PrivateContent />,
     },
     {
         name: "Disukai",
         active: false,
         url: "/profile?page=disukai",
-        component: <>dsad</>,
+        component: <LikeContent />,
     },
-    {
-        name: "Disimpan",
-        active: false,
-        url: "/profile?page=disimpan",
-        component: <>med</>,
-    },
+    // {
+    //     name: "Disimpan",
+    //     active: false,
+    //     url: "/profile?page=disimpan",
+    //     component: <>med</>,
+    // },
 ];

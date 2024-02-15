@@ -2,10 +2,17 @@ import jwt from "jsonwebtoken";
 import user from "../models/user.js";
 import bcrypt from "bcrypt";
 import env from "../helper/enviroment.js";
-import file from "../models/file.js";
+import post from "../models/post.js";
+import like from "../models/like.js";
+import fs from "fs";
 
 export const getUser = async (req, res) => {
-    const users = await user.findAll({ include: [file] });
+    const users = await user.findAll({
+        include: [
+            { model: post, include: [like] },
+            { model: like, include: [post] },
+        ],
+    });
 
     if (users.length === 0) {
         return res.send({
@@ -24,7 +31,21 @@ export const getUser = async (req, res) => {
 export const getUserById = async (req, res) => {
     const { id } = req.params;
 
-    const userSelect = await user.findOne({ where: { id }, include: [file] });
+    const userSelect = await user.findOne({
+        where: { id },
+        include: [
+            { model: post, include: [{ model: like }] },
+            {
+                model: like,
+                include: [
+                    {
+                        model: post,
+                        include: [like, user],
+                    },
+                ],
+            },
+        ],
+    });
 
     if (!userSelect) {
         return res.send({
@@ -101,6 +122,7 @@ export const login = async (req, res) => {
             id: findUser.id,
             username: findUser.username,
             profile: findUser.profile,
+            bio: findUser.bio,
         };
 
         const token = jwt.sign(payload, env.secretToken, { expiresIn: "1d" });
@@ -164,5 +186,74 @@ export const addUser = async (req, res) => {
         status: true,
         msg: "create new user",
         data: newUser,
+    });
+};
+
+export const editUser = async (req, res) => {
+    const { bio, id, username, password, konfirmasiPassword } = req.body;
+    const file = req.file;
+
+    if ((!bio, !id, !username)) {
+        return res.send({
+            status: false,
+            msg: "data tidak valid",
+        });
+    }
+
+    const userSelect = await user.findOne({ where: { id } });
+    if (!userSelect) {
+        return res.send({
+            status: false,
+            msg: "user tidak ditemukan",
+        });
+    }
+
+    if (file) {
+        fs.unlink(`./uploads/profile/${userSelect.profile}`, async (err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
+        const data = await userSelect.update({
+            bio,
+            username,
+            profile: file.filename,
+        });
+
+        const payload = {
+            id: data.id,
+            username: data.username,
+            profile: data.profile,
+            bio: data.bio,
+        };
+
+        const token = jwt.sign(payload, env.secretToken, { expiresIn: "1d" });
+
+        res.cookie("token", token);
+
+        return res.send({
+            status: true,
+            msg: "berhasil mengupdate profile",
+            data,
+        });
+    }
+
+    const data = await userSelect.update({ bio, username });
+
+    const payload = {
+        id: data.id,
+        username: data.username,
+        profile: data.profile,
+        bio: data.bio,
+    };
+
+    const token = jwt.sign(payload, env.secretToken, { expiresIn: "1d" });
+
+    res.cookie("token", token);
+
+    return res.send({
+        status: true,
+        msg: "berhasil mengupdate profile",
+        data,
     });
 };

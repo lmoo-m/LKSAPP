@@ -5,7 +5,12 @@ const storageProfile = multer.diskStorage({
         cb(null, "./uploads/profile");
     },
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
+        cb(
+            null,
+            `${Date.now()}-${Math.floor(Math.random * 999)}-${
+                file.originalname
+            }`
+        );
     },
 });
 
@@ -14,7 +19,12 @@ const storageFile = multer.diskStorage({
         cb(null, "./uploads/file");
     },
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
+        cb(
+            null,
+            `${Date.now()}-${Math.floor(Math.random * 999)}-${
+                file.originalname
+            }`
+        );
     },
 });
 

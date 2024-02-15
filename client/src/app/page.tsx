@@ -1,16 +1,15 @@
 "use client";
 
-import { getFile } from "@/libs/axiosService/fileService";
-
+import { getFile } from "@/libs/axiosService/postService";
 import { useEffect, useState } from "react";
-
 import CardPost from "@/components/cardPost";
-import PhotoProfile from "@/components/photoProfile";
 import { getToken } from "@/libs/decodeToken";
+import FormInput from "@/components/formInput";
 
 export default function Home() {
     const [files, setFiles] = useState([]);
     const [user, setUser] = useState<any>();
+    const [update, setUpdate] = useState<number>();
 
     useEffect(() => {
         const token: any = getToken();
@@ -20,25 +19,18 @@ export default function Home() {
             setFiles(data.data);
         });
         return () => {};
-    }, []);
+    }, [update]);
 
+    // console.log(files);
+
+    files
+        .sort((a: any, b: any) => {
+            return a?.id - b?.id;
+        })
+        .reverse();
     return (
-        <>
-            <section className="px-5 bg-dark border-b-2 border-b-accent py-3 flex gap-3">
-                <PhotoProfile
-                    width={40}
-                    heigth={40}
-                    filename={user?.username}
-                    title={user?.username}
-                    user={user}
-                />
-                <section className="w-full">
-                    <input
-                        placeholder="apa yang kamu pikirkan?"
-                        className="bg-dark outline-none w-full  overflow-visible"
-                    />
-                </section>
-            </section>
+        <section>
+            {user && <FormInput user={user} setUpdate={setUpdate} />}
 
             <div className="flex flex-col items-center mt-5">
                 {files &&
@@ -46,6 +38,9 @@ export default function Home() {
                         return (
                             <CardPost
                                 key={i}
+                                setUpdate={setUpdate}
+                                id={data.id}
+                                likes={data.likes}
                                 date={data.date}
                                 filename={data.filename}
                                 title={data?.title}
@@ -53,7 +48,8 @@ export default function Home() {
                             />
                         );
                     })}
+                <hr className="border-accent border-t-2 w-full" />
             </div>
-        </>
+        </section>
     );
 }

@@ -1,12 +1,14 @@
 import { DataTypes } from "sequelize";
 import database from "../config/database.js";
+import like from "./like.js";
 
-const file = database.define(
-    "file",
+const post = database.define(
+    "post",
     {
         filename: DataTypes.STRING,
         title: DataTypes.STRING,
         date: DataTypes.STRING,
+        public: DataTypes.BOOLEAN,
         user_id: DataTypes.INTEGER,
     },
     {
@@ -15,4 +17,7 @@ const file = database.define(
     }
 );
 
-export default file;
+post.hasMany(like, { foreignKey: "id_post" });
+like.belongsTo(post, { foreignKey: "id_post" });
+
+export default post;

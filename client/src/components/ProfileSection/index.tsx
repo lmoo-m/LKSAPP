@@ -6,9 +6,15 @@ import defaultPhotoProfile from "@/assets/profile.png";
 interface props {
     profile: string;
     username: string;
+    bio: string;
+    createdAt: string;
 }
 
 export default function ProfileSection(user: props) {
+    const x = user?.createdAt?.split("-") || "";
+    const date = new Date(`${x[0]}-${x[1]}-${x[2]?.split("T")[0]}`);
+    const month = date.toLocaleString("id", { month: "long" });
+
     return (
         <section className="px-3">
             <Image
@@ -20,13 +26,15 @@ export default function ProfileSection(user: props) {
                 alt={user?.username ? user?.username : "profile"}
                 width={110}
                 height={20}
-                className="rounded-full border-2 border-secondary bg-accent"
+                className="rounded-full border-2 border-white aspect-square"
             />
             <h1 className="text-xl font-bold mt-2">{user?.username}</h1>
-            <p>Product Designer</p>
+            <p>{user.bio ? user.bio : "tidak ada bio"}</p>
             <section className="flex text-sm md gap-1 mt-2">
                 <MdDateRange className="text-lg" />
-                <p>Bergabung September 2024</p>
+                <p>
+                    Bergabung {month} {x[0]}
+                </p>
             </section>
         </section>
     );

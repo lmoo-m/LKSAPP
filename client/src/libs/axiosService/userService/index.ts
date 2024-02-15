@@ -44,3 +44,8 @@ export const logout = async () => {
     const response = await serviceAxios.post("/logout");
     return response;
 };
+
+export const editProfile = async (data: any) => {
+    const response = await serviceAxios.patch("/users", data);
+    return response;
+};

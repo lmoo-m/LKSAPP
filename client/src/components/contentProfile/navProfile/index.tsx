@@ -7,7 +7,7 @@ export default function NavProfile() {
     const params = useSearchParams();
 
     return (
-        <nav className="flex justify-around sticky top-11 bg-secondary">
+        <nav className="flex justify-around sticky top-[2.70rem] bg-secondary z-40">
             {navItem.map((data, i) => {
                 return (
                     <Link

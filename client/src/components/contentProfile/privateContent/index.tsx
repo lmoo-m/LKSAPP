@@ -2,14 +2,15 @@ import React from "react";
 import CardPost from "@/components/cardPost";
 import { profileContextGlobal } from "@/libs/context/profileContext";
 
-export default function PostContent() {
+export default function PrivateContent() {
     const { user, setUpdate }: any = profileContextGlobal();
+
     return (
         <section>
             {user?.posts &&
                 user?.posts
                     .filter((a: any) => {
-                        if (a.public) {
+                        if (!a.public) {
                             return a;
                         }
                         return;

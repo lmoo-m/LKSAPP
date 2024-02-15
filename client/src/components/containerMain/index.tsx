@@ -26,7 +26,7 @@ export default function ContainerMain({
             {path === "/login" || path === "/register" ? (
                 children
             ) : (
-                <section className="grid grid-cols-6 ">
+                <section className="grid grid-cols-6">
                     <Sidebar />
                     <Main>{children}</Main>
                 </section>

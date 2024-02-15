@@ -1,6 +1,6 @@
 type props = {
-    props: string;
-    setProps: any;
+    props?: string;
+    setProps?: any;
     name: string;
     type?: string | "text";
 };
@@ -11,8 +11,8 @@ export const FormInputComponent = ({ props, setProps, name, type }: props) => {
             <input
                 id={name}
                 type={type}
-                value={props}
-                onChange={(e: any) => setProps(e.target.value)}
+                value={props || ""}
+                onChange={(e: any) => setProps && setProps(e.target.value)}
                 className="w-full outline-none mt-1 px-2 py-3 bg-secondary border  peer focus:bg-primary text-light rounded-sm placeholder:text-light/75 transition "
             />
             <label

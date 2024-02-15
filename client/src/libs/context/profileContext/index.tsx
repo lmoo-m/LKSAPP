@@ -33,9 +33,10 @@ export default function ProfileContext({
     children: React.ReactNode;
 }) {
     const [user, setUser] = useState<any>("pertama");
+    const [update, setUpdate] = useState<number>();
 
     return (
-        <Profile.Provider value={{ user, setUser }}>
+        <Profile.Provider value={{ user, setUser, update, setUpdate }}>
             {children}
         </Profile.Provider>
     );
