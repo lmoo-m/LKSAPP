@@ -7,10 +7,13 @@ export default function LikeContent() {
 
     return (
         <section>
-            {user?.likes &&
+            {user?.likes?.length !== 0 ? (
                 user?.likes
-                    .sort((a: any, b: any) => {
-                        return a?.id - b?.id;
+                    ?.filter((a: any) => {
+                        if (a.post.public) {
+                            return a;
+                        }
+                        return;
                     })
                     .reverse()
                     .map((data: any, i: number) => {
@@ -30,7 +33,12 @@ export default function LikeContent() {
                                 }}
                             />
                         );
-                    })}
+                    })
+            ) : (
+                <div className="border-t-2 border-accent h-[5rem] grid place-content-center">
+                    <h1>Tidak ada yang disukai</h1>
+                </div>
+            )}
             <hr className="border-accent border-t-2 w-full" />
         </section>
     );

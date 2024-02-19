@@ -33,7 +33,7 @@ export default function Home() {
             {user && <FormInput user={user} setUpdate={setUpdate} />}
 
             <div className="flex flex-col items-center mt-5">
-                {files &&
+                {files.length !== 0 ? (
                     files.map((data: any, i: number) => {
                         return (
                             <CardPost
@@ -47,7 +47,12 @@ export default function Home() {
                                 user={data.user}
                             />
                         );
-                    })}
+                    })
+                ) : (
+                    <div className="border-t-2 border-accent h-[5rem] grid place-content-center w-full">
+                        <h1>Tidak postingan</h1>
+                    </div>
+                )}
                 <hr className="border-accent border-t-2 w-full" />
             </div>
         </section>
