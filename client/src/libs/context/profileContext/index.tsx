@@ -42,4 +42,4 @@ export default function ProfileContext({
     );
 }
 
-export const profileContextGlobal = () => useContext(Profile);
+export const ProfileContextGlobal = () => useContext(Profile);

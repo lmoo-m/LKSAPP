@@ -1,9 +1,9 @@
 import React from "react";
 import CardPost from "@/components/cardPost";
-import { profileContextGlobal } from "@/libs/context/profileContext";
+import { ProfileContextGlobal } from "@/libs/context/profileContext";
 
 export default function PrivateContent() {
-    const { user, setUpdate }: any = profileContextGlobal();
+    const { user, setUpdate }: any = ProfileContextGlobal();
 
     const archive = user?.posts
         ?.filter((a: any) => {

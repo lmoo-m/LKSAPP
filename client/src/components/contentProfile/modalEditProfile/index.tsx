@@ -1,6 +1,6 @@
 import React, { Dispatch, useEffect, useState } from "react";
 import { FormInputComponent } from "@/components/input";
-import { profileContextGlobal } from "@/libs/context/profileContext";
+import { ProfileContextGlobal } from "@/libs/context/profileContext";
 import { editProfile } from "@/libs/axiosService/userService";
 import Swal from "sweetalert2";
 
@@ -16,7 +16,7 @@ export default function ModalEditProfile({ show, setShow, ref }: propsType) {
     const [file, setFile] = useState<File>();
     const [preview, setPreview] = useState<string>("");
 
-    const { user, setUser }: any = profileContextGlobal();
+    const { user, setUser }: any = ProfileContextGlobal();
 
     useEffect(() => {
         setUsername(user.username);

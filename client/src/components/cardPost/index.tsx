@@ -6,6 +6,7 @@ import { like, unLiked } from "@/libs/axiosService/likeService";
 import { SlOptions } from "react-icons/sl";
 import { deletePost, updateArchive } from "@/libs/axiosService/postService";
 import { dataProps } from "./type";
+import Image from "next/image";
 
 export default function CardPost(data: dataProps) {
     const { setUpdate }: any = data;
@@ -116,14 +117,15 @@ export default function CardPost(data: dataProps) {
                             className="relative"
                             style={{
                                 maxWidth: "100%",
-                                height: "auto",
+                                height: "30rem",
                             }}
                         >
-                            <img
+                            <Image
                                 src={`${process.env.NEXT_PUBLIC_API_URL}uploads/file/${data.filename}`}
                                 alt={data.title}
+                                fill
                                 loading="lazy"
-                                className="rounded-xl mt-1"
+                                className="rounded-xl mt-1 object-cover"
                             />
                         </div>
                     ) : null}
@@ -144,12 +146,6 @@ export default function CardPost(data: dataProps) {
                             </button>
                             <p>{data?.likes?.length}</p>
                         </section>
-                        {/* <section className="flex items-center gap-2 text-lg">
-                        <span className="hover:bg-white/10 hover:text-primary cursor-pointer transition rounded-full p-1">
-                            <FaRegThumbsDown />
-                        </span>
-                        <p>40</p>
-                    </section> */}
                     </section>
                 </section>
             </article>

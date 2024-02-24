@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { getUser } from "@/libs/axiosService/userService";
-import { profileContextGlobal } from "@/libs/context/profileContext";
+import { ProfileContextGlobal } from "@/libs/context/profileContext";
 import { getToken } from "@/libs/decodeToken";
 import PostContent from "@/components/contentProfile/postContent";
 import { navItem } from "@/components/contentProfile/navProfile/navItem";
@@ -10,7 +10,7 @@ import { useSearchParams } from "next/navigation";
 
 const Profile = () => {
     const decode: any = getToken();
-    const { setUser, update }: any = profileContextGlobal();
+    const { setUser, update }: any = ProfileContextGlobal();
     const params = useSearchParams();
 
     const selectItem = navItem.find(
@@ -18,14 +18,16 @@ const Profile = () => {
     );
 
     useEffect(() => {
-        getUser(decode.id).then((res: any) => {
+        getUser(decode?.id).then((res: any) => {
             const { data } = res.data;
             setUser(data);
         });
-    }, [update]);
+    });
 
     return (
-        <>{selectItem?.component ? selectItem.component : <PostContent />}</>
+        <section>
+            {selectItem?.component ? selectItem.component : <PostContent />}
+        </section>
     );
 };
 

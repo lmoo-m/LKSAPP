@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import ProfileSection from "@/components/ProfileSection";
 import Image from "next/image";
 import cover from "@/assets/cover.svg";
 import NavProfile from "../contentProfile/navProfile";
-import { profileContextGlobal } from "@/libs/context/profileContext";
+import { ProfileContextGlobal } from "@/libs/context/profileContext";
 import ModalEditProfile from "../contentProfile/modalEditProfile";
 
 export default function ContainerProfile({
@@ -13,7 +13,7 @@ export default function ContainerProfile({
 }: {
     children: React.ReactNode;
 }) {
-    const { user } = profileContextGlobal();
+    const { user } = ProfileContextGlobal();
     const [show, setShow] = useState<boolean>(false);
     const modalRef: any = useRef();
 
@@ -26,7 +26,7 @@ export default function ContainerProfile({
     });
 
     return (
-        <>
+        <Suspense>
             {show && (
                 <ModalEditProfile
                     ref={modalRef}
@@ -67,6 +67,6 @@ export default function ContainerProfile({
                     </section>
                 </section>
             </section>
-        </>
+        </Suspense>
     );
 }

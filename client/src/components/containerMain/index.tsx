@@ -19,7 +19,7 @@ export default function ContainerMain({
     useEffect(() => {
         const token = getToken();
         setIsLogin(token ? true : false);
-    }, []);
+    });
 
     return (
         <>

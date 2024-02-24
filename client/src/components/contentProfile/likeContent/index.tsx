@@ -1,9 +1,9 @@
 import React from "react";
 import CardPost from "@/components/cardPost";
-import { profileContextGlobal } from "@/libs/context/profileContext";
+import { ProfileContextGlobal } from "@/libs/context/profileContext";
 
 export default function LikeContent() {
-    const { user, setUpdate }: any = profileContextGlobal();
+    const { user, setUpdate }: any = ProfileContextGlobal();
 
     return (
         <section>
