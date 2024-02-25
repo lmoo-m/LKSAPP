@@ -127,7 +127,11 @@ export const login = async (req, res) => {
 
         const token = jwt.sign(payload, env.secretToken, { expiresIn: "1d" });
 
-        res.cookie("token", token);
+        const getDomain = req.get("Origin");
+
+        res.cookie("token", token, {
+            domain: getDomain,
+        });
         return res.send({
             status: true,
             msg: "berhasil login",
@@ -190,7 +194,7 @@ export const addUser = async (req, res) => {
 };
 
 export const editUser = async (req, res) => {
-    const { bio, id, username, password, konfirmasiPassword } = req.body;
+    const { bio, id, username } = req.body;
     const file = req.file;
 
     if ((!bio, !id, !username)) {
@@ -229,7 +233,11 @@ export const editUser = async (req, res) => {
 
         const token = jwt.sign(payload, env.secretToken, { expiresIn: "1d" });
 
-        res.cookie("token", token);
+        const getDomain = req.get("Origin");
+
+        res.cookie("token", token, {
+            domain: getDomain,
+        });
 
         return res.send({
             status: true,
@@ -249,7 +257,10 @@ export const editUser = async (req, res) => {
 
     const token = jwt.sign(payload, env.secretToken, { expiresIn: "1d" });
 
-    res.cookie("token", token);
+    const getDomain = req.get("Origin");
+    res.cookie("token", token, {
+        domain: getDomain,
+    });
 
     return res.send({
         status: true,
